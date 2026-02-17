@@ -36,18 +36,18 @@ shuffle($cards);
         </header>
 
         <div class="board">
-            <?php for ($i = 0; $i < $totalCards; $i++): ?>
-                <div class="card">
+            <?php foreach ($cards as $card): ?>
+                <div class="card" data-card="<?php echo $card; ?>">
                     <div class="card-inner">
                         <div class="card-front">
                             <img src="images/card-back.png" alt="Card Back">
                         </div>
                         <div class="card-back">
-                            <img src="images/Death.jpg" alt="Card Front">
+                            <img src="images/<?php echo $card; ?>" alt="Card Face">
                         </div>
                     </div>
                 </div>
-            <?php endfor; ?>
+            <?php endforeach; ?>
         </div>
     </div>
     <script src="script.js"></script>
