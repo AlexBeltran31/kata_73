@@ -2,10 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const cards = document.querySelectorAll(".card");
     const secondsDisplay = document.getElementById("seconds");
+    const scoreDisplay = document.getElementById("score-value");
 
     let score = 0;
-    const scoreDisplay = document.querySelector(".score");
-
     let seconds = 0;
     let timerStarted = false;
     let timerInterval = null;
@@ -16,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let matchedPairs = 0;
     const totalPairs = cards.length / 2;
-
 
     function startTimer() {
         timerInterval = setInterval(function () {
@@ -29,8 +27,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (lockBoard) return;
         if (this === firstCard) return;
+        if (this.classList.contains("matched")) return;
 
-        // Start timer on first interaction
         if (!timerStarted) {
             startTimer();
             timerStarted = true;
@@ -48,21 +46,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function checkForMatch() {
+
+        const isMatch = firstCard.dataset.card === secondCard.dataset.card;
+
         if (isMatch) {
-    score++;
-    matchedPairs++;
-    scoreDisplay.textContent = "Score: " + score;
 
-    if (matchedPairs === totalPairs) {
-        clearInterval(timerInterval);
-        setTimeout(() => {
-            alert("You won in " + seconds + " seconds!");
-        }, 500);
-    }
+            firstCard.classList.add("matched");
+            secondCard.classList.add("matched");
 
-    resetBoard();
-    }
+            score++;
+            matchedPairs++;
 
+            scoreDisplay.textContent = score;
+
+            if (matchedPairs === totalPairs) {
+                clearInterval(timerInterval);
+                setTimeout(() => {
+                    alert("You won in " + seconds + " seconds!");
+                }, 500);
+            }
+
+            resetBoard();
+
+        } else {
+            unflipCards();
+        }
     }
 
     function unflipCards() {
@@ -76,7 +84,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function resetBoard() {
-        [firstCard, secondCard] = [null, null];
+        firstCard = null;
+        secondCard = null;
         lockBoard = false;
     }
 
