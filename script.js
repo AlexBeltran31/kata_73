@@ -50,14 +50,15 @@ document.addEventListener("DOMContentLoaded", function () {
         const isMatch = firstCard.dataset.card === secondCard.dataset.card;
 
         if (isMatch) {
-
             firstCard.classList.add("matched");
             secondCard.classList.add("matched");
 
+            firstCard.removeEventListener("click", handleCardClick);
+            secondCard.removeEventListener("click", handleCardClick);
+
             score++;
             matchedPairs++;
-
-            scoreDisplay.textContent = score;
+            scoreDisplay.textContent = "Score: " + score;
 
             if (matchedPairs === totalPairs) {
                 clearInterval(timerInterval);
@@ -67,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             resetBoard();
-
         } else {
             unflipCards();
         }

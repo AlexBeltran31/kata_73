@@ -77,3 +77,8 @@ body {
 .card-back {
     transform: rotateY(180deg);
 }
+
+.card.matched {
+    box-shadow: 0 0 20px gold;
+    transform: scale(1.05);
+}
