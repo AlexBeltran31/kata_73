@@ -1,8 +1,17 @@
 <?php
-$rows = 4;
-$cols = 4;
-$totalCards = $rows * $cols;
 $score = 0;
+$cardFaces = [
+    "Chariot.jpg",
+    "Death.jpg",
+    "Devil.jpg",
+    "Fortune.jpg",
+    "Judgement.jpg",
+    "Moon.jpg",
+    "Priestess.jpg",
+    "The Lovers.jpg"
+];
+$cards = array_merge($cardFaces, $cardFaces);
+shuffle($cards);
 ?>
 
 <!DOCTYPE html>
