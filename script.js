@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const cards = document.querySelectorAll(".card");
     const secondsDisplay = document.getElementById("seconds");
 
+    let score = 0;
+    const scoreDisplay = document.querySelector(".score");
+
     let seconds = 0;
     let timerStarted = false;
     let timerInterval = null;
@@ -44,7 +47,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const isMatch = firstCard.dataset.card === secondCard.dataset.card;
 
         if (isMatch) {
-            resetBoard();
+        score++;
+        scoreDisplay.textContent = "Score: " + score;
+        resetBoard();
         } else {
             unflipCards();
         }

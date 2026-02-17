@@ -27,7 +27,7 @@ shuffle($cards);
         <header class="game-header">
             <h1>Memory Game</h1>
             <div class="score">
-                Score: <?php echo $score; ?>
+                Score: <span id="score-value"><?php echo $score; ?></span>
             </div>
 
             <div class="timer">
