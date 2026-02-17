@@ -14,6 +14,10 @@ document.addEventListener("DOMContentLoaded", function () {
     let secondCard = null;
     let lockBoard = false;
 
+    let matchedPairs = 0;
+    const totalPairs = cards.length / 2;
+
+
     function startTimer() {
         timerInterval = setInterval(function () {
             seconds++;
@@ -44,15 +48,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function checkForMatch() {
-        const isMatch = firstCard.dataset.card === secondCard.dataset.card;
-
         if (isMatch) {
-        score++;
-        scoreDisplay.textContent = "Score: " + score;
-        resetBoard();
-        } else {
-            unflipCards();
-        }
+    score++;
+    matchedPairs++;
+    scoreDisplay.textContent = "Score: " + score;
+
+    if (matchedPairs === totalPairs) {
+        clearInterval(timerInterval);
+        setTimeout(() => {
+            alert("You won in " + seconds + " seconds!");
+        }, 500);
+    }
+
+    resetBoard();
+    }
+
     }
 
     function unflipCards() {
