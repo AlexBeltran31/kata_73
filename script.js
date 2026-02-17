@@ -7,6 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
     let timerStarted = false;
     let timerInterval = null;
 
+    let firstCard = null;
+    let secondCard = null;
+    let lockBoard = false;
+
     function startTimer() {
         timerInterval = setInterval(function () {
             seconds++;
@@ -14,17 +18,55 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1000);
     }
 
+    function handleCardClick() {
+
+        if (lockBoard) return;
+        if (this === firstCard) return;
+
+        // Start timer on first interaction
+        if (!timerStarted) {
+            startTimer();
+            timerStarted = true;
+        }
+
+        this.classList.add("flipped");
+
+        if (!firstCard) {
+            firstCard = this;
+            return;
+        }
+
+        secondCard = this;
+        checkForMatch();
+    }
+
+    function checkForMatch() {
+        const isMatch = firstCard.dataset.card === secondCard.dataset.card;
+
+        if (isMatch) {
+            resetBoard();
+        } else {
+            unflipCards();
+        }
+    }
+
+    function unflipCards() {
+        lockBoard = true;
+
+        setTimeout(function () {
+            firstCard.classList.remove("flipped");
+            secondCard.classList.remove("flipped");
+            resetBoard();
+        }, 1000);
+    }
+
+    function resetBoard() {
+        [firstCard, secondCard] = [null, null];
+        lockBoard = false;
+    }
+
     cards.forEach(card => {
-        card.addEventListener("click", function () {
-
-            // Start timer only once
-            if (!timerStarted) {
-                startTimer();
-                timerStarted = true;
-            }
-
-            card.classList.toggle("flipped");
-        });
+        card.addEventListener("click", handleCardClick);
     });
 
 });
